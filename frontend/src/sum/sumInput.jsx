@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
+import { inputChanged } from './action'
 import IconButton from './iconButton'
 
-export default class sumInput extends Component {
+class SumInput extends Component {
 	render() {
 		return (
 			<div>
@@ -10,7 +13,7 @@ export default class sumInput extends Component {
 					<div className='col-xs-3'>
 						<input id='sumNumber' className='form-control' 
 							value={this.props.number}
-							onChange={this.props.handleChange}
+							onChange={this.props.inputChanged}
 							>
 						</input>
 					</div>
@@ -26,6 +29,14 @@ export default class sumInput extends Component {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 }
+
+
+const mapStateToProps = state => ({ number: state.number })
+const mapDispatchToProps = dispatch => bindActionCreators({
+	inputChanged
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(SumInput)

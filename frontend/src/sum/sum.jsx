@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
+
 import axios from 'axios'
 
 import SumInput from './sumInput'
 
 const URL = 'http://localhost:3030/api/sums'
 
-export default class sum extends Component {
+export default class Sum extends Component {
 	constructor(props){
 		super(props)
 
-		this.state = { number: 0, sumTotal: 0 }
+		this.state = { id: 0, number: 0, sumTotal: 0 }
 
 		this.handleSum = this.handleSum.bind(this)
 		this.handleChange = this.handleChange.bind(this)
@@ -19,7 +20,7 @@ export default class sum extends Component {
 
 	refresh(){
 		axios.get(URL)
-			.then(resp => this.setState({ ...this.state, sumTotal: resp.data[0].sum }))
+			.then(resp => this.setState({ ...this.state, sumTotal: resp.data[0].sum, id: resp.data[0]._id }))
 	}
 
 	handleChange(e){
@@ -27,7 +28,7 @@ export default class sum extends Component {
 	}
 
 	handleSum(){
-		const id = '598e6b9bf44a632e2f18c498'
+		const id = this.state.id
 		let currentNumber = this.state.sumTotal + parseInt(this.state.number) 
 		axios.put(`${URL}/${id}`, { ...this.state, sum: currentNumber })
 			.then(resp => this.refresh())
@@ -38,7 +39,6 @@ export default class sum extends Component {
 			<div>
 				<h1>Sum</h1>
 				<SumInput
-					handleChange = { this.handleChange }
 					handleSum = { this.handleSum }
 					number = {this.state.number }
 					result = { this.state.sumTotal }
@@ -47,3 +47,16 @@ export default class sum extends Component {
 		)
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
