@@ -1,17 +1,15 @@
 const INITIAL_STATE = { 
 	id: 0, 
-	number: 1, 
+	currentNumber: 0, 
 	sumTotal: 0 
 }
 
 export default (state = INITIAL_STATE, action) => {
 	switch(action.type){
 		case 'REFRESH':
-		 	return { ...state, sumTotal: action.payload }
-		case 'SUM':
-			return { ...state, sumTotal: state.number + state.sumTotal }
+		 	return { ...state, id: action.payload._id, sumTotal: action.payload.sum }
 		case 'INPUT_CHANGED':
-		 	return { ...state, number: action.payload}
+		 	return { ...state, currentNumber: +action.payload}
 		default:
 			return state
 	}
