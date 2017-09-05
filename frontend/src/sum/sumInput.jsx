@@ -2,11 +2,20 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { inputChanged } from './action'
+import { inputChanged, refresh } from './action'
 import IconButton from './iconButton'
 
 class SumInput extends Component {
+	constructor(props){
+		super(props)
+	}
+
+	componentWillMount(){
+		this.props.refresh()
+	}
+
 	render() {
+		console.log(this.props.sumTotal)
 		return (
 			<div>
 				<div className='container'>
@@ -25,7 +34,7 @@ class SumInput extends Component {
 						/>
 					</div>
 					<div className='col-xs-3'>
-						<input id='showSum' className='form-control' value={this.props.result} disabled></input>
+						<input id='showSum' className='form-control' value={this.props.sumTotal} disabled></input>
 					</div>
 				</div>
 			</div>
@@ -34,9 +43,10 @@ class SumInput extends Component {
 }
 
 
-const mapStateToProps = state => ({ number: state.number })
+const mapStateToProps = state => ({ number: state.sum.number, sumTotal: state.sum.sumTotal })
 const mapDispatchToProps = dispatch => bindActionCreators({
-	inputChanged
+	inputChanged,
+	refresh
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SumInput)
